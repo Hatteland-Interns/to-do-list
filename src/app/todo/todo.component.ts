@@ -22,13 +22,14 @@ export class TodoComponent implements OnInit {
     this.tasks = this.storage.getTasks();
   }
 
+  
   /**
    * Remove the tasks from the list
    *
    * @param id task index to remove
    */
   delete(id): void {
-    this.storage.delete(id);
+    this.storage.deleteTaskById(id);
     this.tasks = this.storage.getTasks();
   }
 }
