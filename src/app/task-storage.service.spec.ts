@@ -1,40 +1,52 @@
 import { TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TaskStorageService } from './task-storage.service';
 
-describe('TaskStorageService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+//let service: TaskStorageService = TestBed.get(TaskStorageService);
+const httpClientSpy = jasmine.createSpyObj('HttpClient', ['post', 'get']);
 
-  const service: TaskStorageService = TestBed.get(TaskStorageService);
+describe('TaskStorageService', () => {
+  beforeEach(() => TestBed.configureTestingModule({
+    imports: [HttpClientTestingModule], 
+    providers: [TaskStorageService]
+  }));
+
 
   it('service should be created', () => {
-    expect(service).toBeTruthy();
+    // const service: TaskStorageService = TestBed.get(TaskStorageService);
+    expect(TestBed.get(TaskStorageService)).toBeTruthy();
   });
 
   it('should load tasks from file', () => {
-    expect(service.getTasks()).toBeTruthy();
+    //const service: TaskStorageService = TestBed.get(TaskStorageService);
+    expect(TestBed.get(TaskStorageService).getTasks()).toBeTruthy();
   });
 
   it('should get the task by id', () => {
     //expect(service.getTaskById(1)).toBeTruthy();
-    expect(service.getTaskById(3).title).toBe("Buy groceries");
+    //const service: TaskStorageService = TestBed.get(TaskStorageService);
+    expect(TestBed.get(TaskStorageService).getTaskById(3).title).toBe("Buy groceries");
   });
   
   it('should update a tasks', () => {
-    expect(service.updateTaskById(2,"Buy magazine","Magazine name is BitHit!")).toBeTruthy();
-    expect(service.getTaskById(2).title).toBe("Buy magazine");
+    //const service: TaskStorageService = TestBed.get(TaskStorageService);
+    expect(TestBed.get(TaskStorageService).updateTaskById(2,"Buy magazine","Magazine name is BitHit!")).toBeTruthy();
+    expect(TestBed.get(TaskStorageService).getTaskById(2).title).toBe("Buy magazine");
   });
 
   it('should returns highest task id from the list', () => {
-    expect(service.getTaskBWithHighestId()).toBe(5);
+    //const service: TaskStorageService = TestBed.get(TaskStorageService);
+    expect(TestBed.get(TaskStorageService).getTaskBWithHighestId()).toBe(3);
   });
 
   it('should delete a tasks by Id', () => {
-    expect(service.deleteTaskById(2)).toBeTruthy();
+    //const service: TaskStorageService = TestBed.get(TaskStorageService);
+    expect(TestBed.get(TaskStorageService).deleteTaskById(2)).toBeTruthy();
     //expect(service.getTasks.length).toBe(4);
   });
 
   it('should count the number of tasks, after adding and removing', () => {
-    expect(service.getTasks().length).toBe(5);
+    //const service: TaskStorageService = TestBed.get(TaskStorageService);
+    expect(TestBed.get(TaskStorageService).getTasks().length).toBe(3);
   });
 });
