@@ -31,12 +31,20 @@ export class TaskAddComponent implements OnInit {
     this.form = this.formBuilder.group(
       {
         title: ['', Validators.required],
+        note: ['', Validators.required]
       });
   }
   /**
    * Create a task a redirect to the todo list
    */
   createTask() {
+    if(!this.title.value){
+     // alert("Title cannot be empty");
+      return;
+    }else if(!this.note.value){
+    //  alert("Note cannot be empty");
+      return;
+    }
     this.storage.add(this.title.value, this.note.value);
     this.router.navigate(['/tasks'])
   }
