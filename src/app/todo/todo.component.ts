@@ -19,7 +19,11 @@ export class TodoComponent implements OnInit {
    */
   ngOnInit() : void{
     this.storage.init();
-    this.tasks = this.storage.getTasks();
+    //this.tasks = this.storage.getTasks();
+    this.storage.getTasks().subscribe(d=>{
+      console.log("d is ",d);
+      this.tasks=d
+    });
   }
 
   
@@ -30,6 +34,7 @@ export class TodoComponent implements OnInit {
    */
   delete(id): void {
     this.storage.deleteTaskById(id);
-    this.tasks = this.storage.getTasks();
+    // this.tasks = this.storage.getTasks();
+    this.storage.getTasks().subscribe(d=>this.tasks=d);
   }
 }

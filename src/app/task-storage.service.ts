@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from "@angular/core";
 
 import { Task } from "../app/shared/models/task.model";
 import { HttpClient } from "@angular/common/http";
-import { Subscription } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -19,14 +19,21 @@ export class TaskStorageService implements OnDestroy {
   constructor(private http: HttpClient) {}
 
   /* Returns all tasks */
-  getTasks(): Task[] {
-    this.init();
-    return this.tasks;
+  getTasks(): Observable<Task[]> {
+    let temVar = this.init();
+    return temVar;
+    // temVar.subscribe((tasks: any[]) => {
+    //   console.log("Logging this.task ",tasks);
+    //   return tasks;
+    // });
+    
   }
 
-  /* Returns all task by Id */
+  /* Returns task by Id */
   getTaskById(id): Task {
     this.init();
+    console.log("task length :",this.tasks.length);
+
     for (let i = 0; i < this.tasks.length; i++) {
       let task = this.tasks[i];
       if (task.id != id) {
@@ -82,26 +89,26 @@ export class TaskStorageService implements OnDestroy {
   /**
    * Load tasks from the API
    */
-  init() {
-    if (this.initialized) {
-      console.log("Already initialized");
-      return;
-    }
-    console.log("Loading data from json file");
+  // init() {
+  //   if (this.initialized) {
+  //     console.log("Already initialized");
+  //     return;
+  //   }
+  //   console.log("Loading data from json file");
 
-    this.subscription = this.http
-      .get("https://localhost:44378/api/TodoItems")
-      .subscribe((tasks: any[]) => {
-        console.log(tasks);
-        for (let i = 0; i < tasks.length; i++) {
-          this.tasks.push(
-            new Task(tasks[i]["title"], tasks[i]["note"], tasks[i]["id"])
-          );
-        }
-      });
+  //   this.subscription = this.http
+  //     .get("https://localhost:44378/api/TodoItems")
+  //     .subscribe((tasks: any[]) => {
+  //       console.log(tasks);
+  //       for (let i = 0; i < tasks.length; i++) {
+  //         this.tasks.push(
+  //           new Task(tasks[i]["title"], tasks[i]["note"], tasks[i]["id"])
+  //         );
+  //       }
+  //     });
 
-    this.initialized = true;
-  }
+  //   this.initialized = true;
+  // }
   /**
    * Create a new task based on the given data (+ generate a new id)
    * @param title
@@ -115,4 +122,19 @@ export class TaskStorageService implements OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
+  init() {
+    if (this.initialized) {
+      console.log("Already initialized");
+      return;
+    }
+    console.log("Loading data from json file");
+    //this.initialized = true;
+
+    return this.http.get<Task[]>("https://localhost:44378/api/TodoItems");
+
+    
+  }
+
 }
+
