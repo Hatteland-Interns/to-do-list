@@ -13,6 +13,7 @@ export class TodoComponent implements OnInit {
   loading: boolean = false;
 
   constructor(private storage: TaskStorageService) {
+
   }
  
 
@@ -21,16 +22,11 @@ export class TodoComponent implements OnInit {
    */
   ngOnInit() : void{
     this.loading = true;
-    this.storage.init();
-    var data = this.storage.getTasks();
-    
-    if(data){      
+    this.storage.getTasks().subscribe(data => {
       this.tasks = data;
       this.loading = false;
-    }
-    // setTimeout(() => {
-    //   this.loading = false;
-    // }, 10000); 
+    })
+
   }
 
   
@@ -41,6 +37,8 @@ export class TodoComponent implements OnInit {
    */
   delete(id): void {
     this.storage.deleteTaskById(id);
-    this.tasks = this.storage.getTasks();
+    this.storage.getTasks().subscribe(data => {
+      this.tasks = data;
+    });
   }
 }
