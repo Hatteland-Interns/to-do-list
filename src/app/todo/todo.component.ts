@@ -10,16 +10,27 @@ import {Task} from "../shared/models/task.model";
 export class TodoComponent implements OnInit {
 
   tasks: Task[];
+  loading: boolean = false;
 
   constructor(private storage: TaskStorageService) {
   }
+ 
 
   /**
    * Load tasks on init
    */
   ngOnInit() : void{
+    this.loading = true;
     this.storage.init();
-    this.tasks = this.storage.getTasks();
+    var data = this.storage.getTasks();
+    
+    if(data){      
+      this.tasks = data;
+      this.loading = false;
+    }
+    // setTimeout(() => {
+    //   this.loading = false;
+    // }, 10000); 
   }
 
   

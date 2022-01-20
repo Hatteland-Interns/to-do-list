@@ -26,6 +26,12 @@
   </table>
 </div>
 
-<ng-template #noTasks>
+<!-- <ng-template #noTasks>
   <h2>Congratulations, you finished your list ! </h2>
-</ng-template>
+</ng-template> -->
+
+<div *ngIf="loading" >
+  <h2>Your data is loading!!! </h2>
+</div>
+
+
