@@ -30,15 +30,14 @@ export class TodoComponent implements OnInit {
   }
 
   
-  /**
-   * Remove the tasks from the list
-   *
-   * @param id task index to remove
-   */
+  /* Remove the tasks from the list */
   delete(id): void {
-    this.storage.deleteTaskById(id);
-    this.storage.getTasks().subscribe(data => {
-      this.tasks = data;
+    this.storage.deleteTaskById(id).subscribe(data => {
+      this.storage.getTasks().subscribe(data => {
+        this.tasks = data;
+      });
     });
+
+    
   }
 }

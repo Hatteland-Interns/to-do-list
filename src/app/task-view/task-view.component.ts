@@ -20,7 +20,7 @@ export class TaskViewComponent implements OnInit {
    */
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.task = this.storage.getTaskById(params.get('id'));
+      //this.task = this.storage.getTaskById(params.get('id'));
     });
   }
 

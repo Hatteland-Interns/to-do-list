@@ -1,8 +1,9 @@
 import { Injectable, OnDestroy } from "@angular/core";
 
 import { Task } from "../app/shared/models/task.model";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Subscription,Observable,of } from "rxjs";
+
 
 @Injectable({
   providedIn: "root",
@@ -13,52 +14,52 @@ export class TaskStorageService implements OnDestroy {
 
   URL = "https://localhost:44378/api/TodoItems";
 
-  /**
-   * Whether data have already been loaded from storage
-   */
   initialized: boolean = false;
-
-  //CRUD operations with API..
 
   constructor(private http: HttpClient) {}
 
-  /* Returns all tasks */
+  //CRUD operations with API..
+
+  //store the length
+// 1. communicate with API (add and delete from both frontend and API)
+// 2. functionalities,	
+// 	- add
+// 	- update (complete/done)
+// 	- delete
+
+
+  /* Returns all tasks - GET */
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.URL);
   }
 
-  /* Returns all task by Id */
-  getTaskById(id): Task {
-    //return an observarable task, not the task
-    //subs. wherever use it
+  /* Returns a task by Id - GET(id)*/
+  getTaskById(id): Observable<Task> {
+    return this.http.get<Task>(this.URL);
   }
 
-  /* Update task by Id */
-  updateTaskById(id, title: string, note: string): Task {
-    //use the putt method.. and get the id returned etc.
+  // /* Add a new task */
+  addNewTask(t:Task): Observable<any> {
+    let task = new Task;
+    return this.http.post(this.URL,t);
+  }
+  
+
+  /* Update task by Id - PUT*/
+  updateTaskById(id, title: string, note: string): Observable<any>{
+    const url = `${this.URL}/${id}`;
+    return this.http.put(id,title);
+    //return this.http.put(id,title,note);
   }
 
-  /* Get the task with Highest Id */
-  getTaskBWithHighestId(): number {
-    
-  }
-
-  /* Delete task by Id */
-  deleteTaskById(id) {
-    
-  }
-
-  /**
-   * Create a new task based on the given data (+ generate a new id)
-   * @param title
-   * @param note
-   */
-  add(title, note) {
-    let task = new Task(title, note, this.getTaskBWithHighestId() + 1);
-    this.tasks.push(task);
+  /* Delete a task by Id */
+  deleteTaskById(id): Observable<any> {
+    const url = `${this.URL}/${id}`;
+    return this.http.delete(url);
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }
+

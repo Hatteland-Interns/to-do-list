@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TaskStorageService} from "../task-storage.service";
 import {Router} from '@angular/router';
+import { Task } from '../shared/models/task.model';
 
 
 @Component({
@@ -13,16 +14,14 @@ export class TaskAddComponent implements OnInit {
 
   form: FormGroup;
   submitted = false;
-  /**
-   * Task title form field
-   */
+  
   title = new FormControl('');
 
-  /**
-   *  Task note form field
-   */
   note = new FormControl('');
   d = "hi"
+
+  titleInput ="";
+  noteInput = "";
 
   constructor(private storage: TaskStorageService, private router: Router, private formBuilder: FormBuilder) {
   }
@@ -34,19 +33,23 @@ export class TaskAddComponent implements OnInit {
         note: ['', Validators.required]
       });
   }
-  /**
-   * Create a task a redirect to the todo list
-   */
+  /* Create a task a redirect to the todo list */
   createTask() {
+    console.log("titleInput - ",this.titleInput);
+    console.log("noteInput - ",this.noteInput);
     if(!this.title.value){
      // alert("Title cannot be empty");
       return;
-    }else if(!this.note.value){
-    //  alert("Note cannot be empty");
+    }
+    if(!this.note.value){
       return;
     }
-    this.storage.add(this.title.value, this.note.value);
-    this.router.navigate(['/tasks'])
+    //this.router.navigate(['/tasks'])
+    var t = new Task();
+    t.id=4;
+    t.note=this.titleInput;
+    t.title=this.noteInput;
+    this.storage.addNewTask(t);
   }
 
   get f() {
