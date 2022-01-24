@@ -37,7 +37,7 @@ export class TaskEditComponent implements OnInit {
    */
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.task = this.storage.getTaskById(params.get('id'));
+      //this.task = this.storage.getTaskById(params.get('id'));
       this.id = this.task.id;
       this.note.setValue(this.task.note);
       this.title.setValue(this.task.title);
@@ -48,7 +48,7 @@ export class TaskEditComponent implements OnInit {
    * Update the task and return to the list
    */
   updateTask() {
-    this.task = this.storage.updateTaskById(this.id, this.title.value, this.note.value);
+    //this.task = this.storage.updateTaskById(this.id, this.title.value, this.note.value);
     this.router.navigate(['/tasks'])
   }
 }
