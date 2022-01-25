@@ -17,16 +17,13 @@ export class TodoComponent implements OnInit {
   }
  
 
-  /**
-   * Load tasks on init
-   */
+  /* Load tasks on init */
   ngOnInit() : void{
     this.loading = true;
     this.storage.getTasks().subscribe(data => {
       this.tasks = data;
       this.loading = false;
     })
-
   }
 
   
@@ -37,7 +34,5 @@ export class TodoComponent implements OnInit {
         this.tasks = data;
       });
     });
-
-    
   }
 }

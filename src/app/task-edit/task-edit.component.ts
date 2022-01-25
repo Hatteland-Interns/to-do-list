@@ -10,45 +10,50 @@ import {Router, ActivatedRoute} from '@angular/router';
   styleUrls: ['./task-edit.component.css']
 })
 export class TaskEditComponent implements OnInit {
-
   task: Task;
 
-  /**
-   * Task id form field
-   */
-  id;
-
-  /**
-   * Task title form field
-   */
+  /* Task id form field */
   title = new FormControl('');
-
-  /**
-   *  Task note form field
-   */
   note = new FormControl('');
 
+  titleInput ="";
+  noteInput ="";
 
   constructor(private storage: TaskStorageService, private route: ActivatedRoute, private router: Router) {
   }
 
-  /**
-   * Load tasks on init
-   */
+  /* Load tasks on init */
   ngOnInit() {
+    const id: number = this.route.snapshot.params.id;
     this.route.paramMap.subscribe(params => {
-      //this.task = this.storage.getTaskById(params.get('id'));
-      this.id = this.task.id;
-      this.note.setValue(this.task.note);
-      this.title.setValue(this.task.title);
+      this.storage.getTaskById(id).subscribe(data => {
+        //console.log("ID from edit: ",id);
+        this.task = data;
+        this.title.setValue(this.task.title);
+        this.note.setValue(this.task.note);
+      })
     });
   }
 
-  /**
-   * Update the task and return to the list
-   */
+  /* Update the task and return to the list */
   updateTask() {
-    //this.task = this.storage.updateTaskById(this.id, this.title.value, this.note.value);
-    this.router.navigate(['/tasks'])
+    const id: number = this.route.snapshot.params.id;
+    console.log("ID from edit2: ",id);
+    if(!this.title.value){
+      console.log("title is empty");
+      return;
+    }
+    if(!this.note.value){
+      console.log("note is empty");
+      return;
+    }
+    var t = new Task();
+    t.id=id;
+    t.title=this.title.value;
+    t.note=this.note.value;
+    console.log("t.title ",t.title);
+    console.log("t.note ",t.note);
+    this.storage.updateTaskById(t);
+    //this.router.navigate(['/tasks'])
   }
 }

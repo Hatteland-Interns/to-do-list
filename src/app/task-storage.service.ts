@@ -2,7 +2,8 @@ import { Injectable, OnDestroy } from "@angular/core";
 
 import { Task } from "../app/shared/models/task.model";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Subscription,Observable,of } from "rxjs";
+import { Subscription,Observable,of, ReplaySubject } from "rxjs";
+import { HttpHeaders } from '@angular/common/http';
 
 
 @Injectable({
@@ -18,16 +19,6 @@ export class TaskStorageService implements OnDestroy {
 
   constructor(private http: HttpClient) {}
 
-  //CRUD operations with API..
-
-  //store the length
-// 1. communicate with API (add and delete from both frontend and API)
-// 2. functionalities,	
-// 	- add
-// 	- update (complete/done)
-// 	- delete
-
-
   /* Returns all tasks - GET */
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.URL);
@@ -35,22 +26,49 @@ export class TaskStorageService implements OnDestroy {
 
   /* Returns a task by Id - GET(id)*/
   getTaskById(id): Observable<Task> {
-    return this.http.get<Task>(this.URL);
+    const url = `${this.URL}/${id}`;
+    console.log('ID :',id);
+    return this.http.get<Task>(url);
   }
 
-  // /* Add a new task */
-  addNewTask(t:Task): Observable<any> {
+  /* Add a new task */
+  async addNewTask(t:Task): Promise<Observable<any>> {
     let task = new Task;
-    return this.http.post(this.URL,t);
-  }
+
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    };
+
+    const requestOptions = {                                                                                                                                                                                 
+        headers: new HttpHeaders(headerDict), 
+    };
+
+    var tempData;
+    var resp =  this.http.post("https://localhost:44378/api/TodoItems", t, requestOptions).subscribe(
+    data => {
+      console.log('ok');
+      tempData = data;
+    },
+    error => {
+      console.log('error');
+    }
+  );  
+
+  return tempData;
+}
   
 
   /* Update task by Id - PUT*/
-  updateTaskById(id, title: string, note: string): Observable<any>{
-    const url = `${this.URL}/${id}`;
-    return this.http.put(id,title);
-    //return this.http.put(id,title,note);
+  updateTaskById(t): Observable<any>{
+    //console.log("title from update",t.title);
+    //console.log("id from update",t.id);
+
+    const url = `${this.URL}/${t.id}`;
+    return this.http.put(url,t);
   }
+
 
   /* Delete a task by Id */
   deleteTaskById(id): Observable<any> {

@@ -30,7 +30,7 @@ export class TaskViewComponent implements OnInit {
    * @param id task index to remove
    */
   delete(id): void {
-    this.storage.deleteTaskById(this.task.id);
+    //this.storage.deleteTaskById(this.task.id);
     this.router.navigate(['/tasks'])
   }
 }

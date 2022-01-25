@@ -38,18 +38,17 @@ export class TaskAddComponent implements OnInit {
     console.log("titleInput - ",this.titleInput);
     console.log("noteInput - ",this.noteInput);
     if(!this.title.value){
-     // alert("Title cannot be empty");
       return;
     }
     if(!this.note.value){
       return;
     }
-    //this.router.navigate(['/tasks'])
     var t = new Task();
-    t.id=4;
+    //t.id=9;
     t.note=this.titleInput;
     t.title=this.noteInput;
     this.storage.addNewTask(t);
+    //this.router.navigate(['/tasks'])
   }
 
   get f() {
