@@ -1,5 +1,4 @@
 import { Injectable, OnDestroy } from "@angular/core";
-
 import { Task } from "../app/shared/models/task.model";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Subscription,Observable,of, ReplaySubject } from "rxjs";
@@ -33,7 +32,6 @@ export class TaskStorageService implements OnDestroy {
 
   /* Add a new task */
   async addNewTask(t:Task): Promise<Observable<any>> {
-    let task = new Task;
 
     const headerDict = {
       'Content-Type': 'application/json',
@@ -61,13 +59,33 @@ export class TaskStorageService implements OnDestroy {
   
 
   /* Update task by Id - PUT*/
-  updateTaskById(t): Observable<any>{
+  updateTaskById(t:Task): Observable<any>{
     //console.log("title from update",t.title);
     //console.log("id from update",t.id);
 
-    const url = `${this.URL}/${t.id}`;
-    return this.http.put(url,t);
-  }
+    const headerDict = {
+      'Content-Type': 'application/json'
+    };
+
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new HttpHeaders(headerDict), 
+  };
+
+  const url = `${this.URL}/${t.id}`;
+
+  var tempData;
+    var resp =  this.http.put(url, t, requestOptions).subscribe(
+    data => {
+      console.log('ok');
+      tempData = data;
+    },
+    error => {
+      console.log('error in Update');
+      console.log('check json: ',tempData);
+    }
+  );  
+  return tempData;
+}
 
 
   /* Delete a task by Id */
