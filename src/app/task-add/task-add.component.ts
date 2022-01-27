@@ -44,11 +44,11 @@ export class TaskAddComponent implements OnInit {
       return;
     }
     var t = new Task();
-    //t.id=13;
+    //t.id=0;
     t.note=this.titleInput;
     t.title=this.noteInput;
     this.storage.addNewTask(t);
-    //this.router.navigate(['/tasks'])
+    this.router.navigate(['/tasks'])
   }
 
   get f() {

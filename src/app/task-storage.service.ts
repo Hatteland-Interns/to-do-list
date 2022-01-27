@@ -26,7 +26,8 @@ export class TaskStorageService implements OnDestroy {
   /* Returns a task by Id - GET(id)*/
   getTaskById(id): Observable<Task> {
     const url = `${this.URL}/${id}`;
-    console.log('ID :',id);
+    //console.log('get task by ID :',id);
+    //return this.http.get<Task>(url);
     return this.http.get<Task>(url);
   }
 
@@ -42,6 +43,9 @@ export class TaskStorageService implements OnDestroy {
     const requestOptions = {                                                                                                                                                                                 
         headers: new HttpHeaders(headerDict), 
     };
+
+    var y: number = +t.id;
+    t.id=y;
 
     var tempData;
     var resp =  this.http.post("https://localhost:44378/api/TodoItems", t, requestOptions).subscribe(
@@ -72,6 +76,9 @@ export class TaskStorageService implements OnDestroy {
   };
 
   const url = `${this.URL}/${t.id}`;
+  var y: number = +t.id;
+  t.id=y;
+
 
   var tempData;
     var resp =  this.http.put(url, t, requestOptions).subscribe(
@@ -80,8 +87,8 @@ export class TaskStorageService implements OnDestroy {
       tempData = data;
     },
     error => {
-      console.log('error in Update');
-      console.log('check json: ',tempData);
+      console.log('error in Update',error);
+      //console.log('check json: ',tempData);
     }
   );  
   return tempData;

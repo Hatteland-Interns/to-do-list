@@ -55,6 +55,6 @@ export class TaskEditComponent implements OnInit {
 
     //console.log("t.title ",t.title);
     //console.log("t.note ",t.note);
-    //this.router.navigate(['/tasks'])
+    this.router.navigate(['/tasks'])
   }
 }
