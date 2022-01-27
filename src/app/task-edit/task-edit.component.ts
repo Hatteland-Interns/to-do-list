@@ -38,7 +38,7 @@ export class TaskEditComponent implements OnInit {
   /* Update the task and return to the list */
   updateTask() {
     const id: number = this.route.snapshot.params.id;
-    console.log("ID from edit2: ",id);
+    //console.log("ID from edit2: ",id);
     if(!this.title.value){
       console.log("title is empty");
       return;
@@ -50,10 +50,11 @@ export class TaskEditComponent implements OnInit {
     var t = new Task();
     t.id=id;
     t.title=this.title.value;
-    t.note=this.note.value;
-    console.log("t.title ",t.title);
-    console.log("t.note ",t.note);
+    t.note=this.note.value;    
     this.storage.updateTaskById(t);
+
+    //console.log("t.title ",t.title);
+    //console.log("t.note ",t.note);
     //this.router.navigate(['/tasks'])
   }
 }

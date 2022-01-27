@@ -44,7 +44,7 @@ export class TaskAddComponent implements OnInit {
       return;
     }
     var t = new Task();
-    //t.id=9;
+    //t.id=13;
     t.note=this.titleInput;
     t.title=this.noteInput;
     this.storage.addNewTask(t);
