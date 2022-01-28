@@ -1,51 +1,58 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TaskStorageService } from './task-storage.service';
+import { Task } from "../app/shared/models/task.model";
+
 
 const httpClientSpy = jasmine.createSpyObj('HttpClient', ['post', 'get']);
 
 describe('TaskStorageService', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule], 
-    providers: [{ provide: HttpClientTestingModule, useValue: httpClientSpy }, TaskStorageService]
-  }));
 
-  httpClientSpy.post.and.returnValue({ status: 200, data: {} });
-  httpClientSpy.get.and.returnValue({ status: 200, data: {} });
+  let task : Task;
+  let tasks : Task[];
+  let service: TaskStorageService;
 
-  it('service should be created', () => {
-    const service: TaskStorageService = TestBed.get(TaskStorageService);
-    expect(TestBed.get(TaskStorageService)).toBeTruthy();
-  });
 
-  it('should return data for the endpoint - load tasks from file', () => {
-    const service: TaskStorageService = TestBed.get(TaskStorageService);
-    service.getTasks().subscribe(data => {
-      expect(data.length).toBe(5);
-      console.log("data",data);
-    });
-  });
-  
-  it('should get the task by id', () => {    
-    const service: TaskStorageService = TestBed.get(TaskStorageService);
-    service.getTaskById(10).subscribe(data => {
-      expect(data.title).toBe("Run Run");
-    });
-  });
-  
-  it('should update a tasks', () => {
-    const service: TaskStorageService = TestBed.get(TaskStorageService);
-    service.getTaskById(10).subscribe(data => {
-      expect(TestBed.get(TaskStorageService).updateTaskById(10,"Todo Tasks","	Complete angular app")).toBeTruthy();
-      expect(TestBed.get(TaskStorageService).getTaskById(10).title).toBe("Todo Tasks");
-    });
-  });
+      beforeEach(() => TestBed.configureTestingModule({
+        imports: [ HttpClientTestingModule ]}));
 
-  it('should delete a tasks by Id', () => {
-    const service: TaskStorageService = TestBed.get(TaskStorageService);
-    service.getTaskById(10).subscribe(data => {
-      expect(TestBed.get(TaskStorageService).deleteTaskById(10)).toBeTruthy();
-      expect(service.getTasks.length).toBe(1);
-    });
-  });
+        it('should be created', () => {
+         const service: TaskStorageService = TestBed.get(TaskStorageService);
+         expect(service).toBeTruthy();
+      });
+
+
+        it('getTasks() should call http Get method for the given route', () => {     
+          task = {id : 1, title: "Buy the magazine", note: "Bit Hit!"};
+          service.getTasks().subscribe((t)=>{
+            expect(t).toEqual(tasks);
+          });
+        });
+
+        it('getTaskById() should get the task by id', () => {     
+          task = {id : 1, title: "Buy the magazine", note: "Bit Hit!"};
+          service.getTaskById(1).subscribe((t)=>{
+            expect(t).toEqual(task);
+          });
+        });
+
+        it('updateTaskById() should update a tasks', () => {     
+          task = {id : 1, title: "Buy the magazine", note: "Bit Hit!"};
+          let temp :Task;
+          temp.id=1;
+          temp.title="Todo Tasks";
+          temp.note="Complete angular app";
+          service.updateTaskById(temp).subscribe((t)=>{
+            expect(t).toEqual(task);
+          });
+        });
+
+        it('deleteTaskById() should delete a tasks by Id', () => {     
+          task = {id : 1, title: "Buy the magazine", note: "Bit Hit!"};
+          service.deleteTaskById(1).subscribe((t)=>{
+            expect(t).toEqual(task);
+            expect(service.getTasks.length).toBe(0);
+          });
+        });
+
 });
