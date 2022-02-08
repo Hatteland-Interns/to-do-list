@@ -17,6 +17,6 @@ steps:
 
 - script: |
     npm install 16.13.2 -g
-    npm install -g @angular
+    npm install -g @angular/cli
     npm run build
   displayName: 'npm install and build'
