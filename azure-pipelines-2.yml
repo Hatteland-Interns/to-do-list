@@ -39,11 +39,11 @@ steps:
   inputs:
     rootFolderOrFile: dist
 
-- task: PublishPipelineArtifact@1
-  displayName: 'Publish Pipeline Artifact'
+- task: PublishBuildArtifacts@1
   inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    artifact: drop
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
 
 - task: AzureWebApp@1
   displayName: 'Deploy Azure Web App : to-do-list-frontend'
