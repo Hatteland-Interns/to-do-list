@@ -52,5 +52,3 @@ steps:
     appName: 'to-do-list-frontend'
     appType: webApp
     package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip 
-
-- task: PublishBuildArtifacts@1
