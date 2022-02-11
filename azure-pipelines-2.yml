@@ -41,7 +41,7 @@ steps:
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
   inputs:
-    targetPath: '$(Pipeline.Workspace)'
+    targetPath: '$(Pipeline.Workspace)/a'
     artifact: drop
 - task: AzureWebApp@1
   displayName: 'Deploy Azure Web App : to-do-list-frontend'
