@@ -35,9 +35,13 @@ steps:
     customCommand: 'run build'
 
 - task: ArchiveFiles@2
-  displayName: 'Archive FIles'
+  displayName: 'Archive files'
   inputs:
-    rootFolderOrFile: dist
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+    includeRootFolder: false
+    archiveType: zip
+    archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+    replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
   inputs:
