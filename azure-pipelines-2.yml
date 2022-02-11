@@ -49,4 +49,4 @@ steps:
     azureSubscription: 'c996ad2b-c26d-4f31-a4c1-3fbbbf1d96ca'
     appName: 'to-do-list-frontend'
     appType: webApp
-    package: $(System.DefaultWorkingDirectory)/**/*.zip
+    package: $(Pipeline.Workspace)/**/*.zip
