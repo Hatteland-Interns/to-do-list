@@ -35,8 +35,17 @@ steps:
     customCommand: 'run build'
 
 - task: Npm@1
-  displayName: 'ng test' --watch=false --karmaConfig karma.conf.ci.js --code-coverage
+  displayName: Build
   inputs:
+    command: custom
+    verbose: false
+    customCommand: npm install -d karma-junit-reporter
+
+- task: Npm@1
+  displayName: 'tests' 
+  inputs:
+    command: custom
+    customCommand: ng test
     verbose: false
 
 - task: ArchiveFiles@2
