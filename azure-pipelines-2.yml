@@ -23,7 +23,7 @@ steps:
     customCommand: 'install'
 
 - task: Npm@1
-  displayName: Build
+  displayName: 'Build On'
   inputs:
     command: custom
     verbose: false
