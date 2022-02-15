@@ -29,13 +29,6 @@ steps:
     customCommand: 'run build'
 
 - task: Npm@1
-  displayName: karma
-  inputs:
-    command: custom
-    verbose: false
-    customCommand: npm install -d karma-junit-reporter
-
-- task: Npm@1
   displayName: 'tests' 
   inputs:
     command: custom
