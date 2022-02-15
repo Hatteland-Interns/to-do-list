@@ -35,7 +35,7 @@ steps:
     customCommand: 'run build'
 
 - task: Npm@1
-  displayName: Build
+  displayName: karma
   inputs:
     command: custom
     verbose: false
