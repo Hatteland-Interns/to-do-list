@@ -20,7 +20,7 @@ steps:
   inputs:
     command: custom
     verbose: false
-    customCommand: 'install @angular/cli'
+    customCommand: 'install -g @angular/cli'
 
 
 - task: Npm@1
