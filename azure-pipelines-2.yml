@@ -14,10 +14,6 @@ steps:
     verbose: false
     customCommand: 'install @angular/cli'
 - task: Npm@1
-  displayName: 'npm install'
-  inputs:
-    verbose: false
-- task: Npm@1
   displayName: Build
   inputs:
     command: custom
