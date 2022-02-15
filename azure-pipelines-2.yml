@@ -35,7 +35,7 @@ steps:
     customCommand: 'run build'
 
 - task: Npm@1
-  displayName: 'ng test'
+  displayName: 'ng test' --watch=false --karmaConfig karma.conf.ci.js --code-coverage
   inputs:
     verbose: false
 
