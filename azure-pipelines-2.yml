@@ -17,9 +17,10 @@ steps:
 
 
 - task: Npm@1
-  displayName: 'npm install -d'
+  displayName: 'npm install'
   inputs:
     verbose: false
+    customCommand: 'install'
 
 - task: Npm@1
   displayName: Build
