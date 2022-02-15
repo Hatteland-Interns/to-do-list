@@ -24,7 +24,7 @@ steps:
   displayName: 'ng test'
   inputs:
     verbose: false
-    customCommand: 'nun test'
+    customCommand: 'run test'
 
 - task: ArchiveFiles@2
   displayName: 'Archive FIles'
