@@ -23,6 +23,13 @@ steps:
     customCommand: 'install'
 
 - task: Npm@1
+  displayName: 'install dev'
+  inputs:
+    verbose: false
+    customCommand: 'install --only=dev'
+
+
+- task: Npm@1
   displayName: 'Build On'
   inputs:
     command: custom
