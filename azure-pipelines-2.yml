@@ -17,7 +17,7 @@ steps:
 
 
 - task: Npm@1
-  displayName: 'npm install'
+  displayName: 'npm install -d'
   inputs:
     verbose: false
 
