@@ -13,6 +13,7 @@ export class TaskStorageService implements OnDestroy {
   private subscription: Subscription;
 
   URL = "https://todolist-backend-appservice.azurewebsites.net/api/TodoItems";
+  //URL = "https://localhost:44378/api/TodoItems";
 
   initialized: boolean = false;
 
@@ -48,7 +49,7 @@ export class TaskStorageService implements OnDestroy {
     t.id=y;
 
     var tempData;
-    var resp =  this.http.post("https://localhost:44378/api/TodoItems", t, requestOptions).subscribe(
+    var resp =  this.http.post("https://todolist-backend-appservice.azurewebsites.net/api/TodoItems", t, requestOptions).subscribe(
     data => {
       console.log('ok');
       tempData = data;
