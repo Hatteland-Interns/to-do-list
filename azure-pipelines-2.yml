@@ -23,10 +23,7 @@ steps:
     command: custom
     verbose: false
     customCommand: 'run build'
-- task: Npm@1
-  displayName: 'ng test'
-  inputs:
-    verbose: false
+
 - task: ArchiveFiles@2
   displayName: 'Archive FIles'
   inputs:
