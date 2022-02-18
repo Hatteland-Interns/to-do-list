@@ -12,7 +12,7 @@ export class TaskStorageService implements OnDestroy {
   tasks: Task[] = [];
   private subscription: Subscription;
 
-  URL = "https://localhost:44378/api/TodoItems";
+  URL = "https://todolist-backend-appservice.azurewebsites.net/api/TodoItems";
 
   initialized: boolean = false;
 
