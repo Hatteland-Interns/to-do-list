@@ -49,7 +49,7 @@ export class TaskStorageService implements OnDestroy {
     t.id=y;
 
     var tempData;
-    var resp =  this.http.post("https://todolist-backend-appservice.azurewebsites.net/api/TodoItems", t, requestOptions).subscribe(
+    var resp =  this.http.post(this.URL, t, requestOptions).subscribe(
     data => {
       console.log('ok');
       tempData = data;
