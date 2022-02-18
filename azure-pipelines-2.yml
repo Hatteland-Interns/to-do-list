@@ -1,7 +1,7 @@
 trigger:
 - master
 pool:
-  vmImage: Default
+  vmImage: ubuntu-latest
 steps:
 - task: NodeTool@0
   inputs:
@@ -14,18 +14,19 @@ steps:
     verbose: false
     customCommand: 'install @angular/cli'
 - task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    verbose: false
+- task: Npm@1
   displayName: Build
   inputs:
     command: custom
     verbose: false
     customCommand: 'run build'
-
 - task: Npm@1
   displayName: 'ng test'
   inputs:
     verbose: false
-    customCommand: 'run test'
-
 - task: ArchiveFiles@2
   displayName: 'Archive FIles'
   inputs:
