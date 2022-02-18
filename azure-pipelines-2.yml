@@ -17,8 +17,6 @@ steps:
     verbose: false
     customCommand: 'install -g @angular/cli'
 
-
-    customCommand: 'install @angular/cli'
 - task: Npm@1
   displayName: 'npm install'
   inputs:
@@ -49,3 +47,18 @@ steps:
     verbose: false
 
 - task: ArchiveFiles@2
+  displayName: 'Archive FIles'
+  inputs:
+    rootFolderOrFile: dist
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Pipeline Artifact'
+  inputs:
+    targetPath: '$(Pipeline.Workspace)/a'
+    artifact: drop
+- task: AzureWebApp@1
+  displayName: 'Deploy Azure Web App : to-do-list-frontend'
+  inputs:
+    azureSubscription: 'c996ad2b-c26d-4f31-a4c1-3fbbbf1d96ca'
+    appName: 'to-do-list-frontend'
+    appType: webApp
+    package: $(Pipeline.Workspace)/**/*.zip
