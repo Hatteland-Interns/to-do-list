@@ -48,7 +48,7 @@ export class TaskAddComponent implements OnInit {
     t.note=this.titleInput;
     t.title=this.noteInput;
     this.storage.addNewTask(t);
-    this.router.navigate(['/'])
+    this.router.navigate(['/tasks'])
   }
 
   get f() {
